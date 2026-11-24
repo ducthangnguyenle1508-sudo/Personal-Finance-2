@@ -62,3 +62,31 @@ tbody tr{transition:background .12s}tbody tr:hover{background:#f8faf8}.field inp
   .field input,.field select{min-height:44px;font-size:16px}
   .toast{width:calc(100% - 24px);text-align:center;bottom:calc(12px + env(safe-area-inset-bottom))}
 }
+
+@media(max-width:560px){
+  /* Let both data tables fit the phone instead of forcing desktop widths. */
+  #investmentView .table-wrap,#cashflowView .table-wrap{overflow:visible}
+  #investmentView .table-wrap table,#cashflowView .table-wrap table{display:block;width:100%;min-width:0;white-space:normal}
+  #investmentView .table-wrap thead,#cashflowView .table-wrap thead{display:none}
+  #investmentView #tbody,#cashflowView #transactionsBody{display:grid;gap:10px;width:100%;min-width:0}
+  #investmentView #tbody tr,#cashflowView #transactionsBody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;width:100%;min-width:0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--white)}
+  #investmentView #tbody td,#cashflowView #transactionsBody td{display:block;width:auto;min-width:0;max-width:100%;padding:2px 0;border:0;white-space:normal;overflow-wrap:anywhere;word-break:normal;font-size:12px;text-align:left}
+  #investmentView #tbody td:nth-child(1),#cashflowView #transactionsBody td:nth-child(1){grid-column:1;grid-row:1}
+  #investmentView #tbody td:nth-child(2){grid-column:1/-1;grid-row:2;color:var(--muted);font-size:11px;line-height:1.45}
+  #investmentView #tbody td:nth-child(2)::before{content:'Thông tin · ';font-weight:650;color:var(--ink)}
+  #investmentView #tbody td:nth-child(3){grid-column:2;grid-row:1;text-align:right;font-size:13px;font-weight:700}
+  #investmentView #tbody td:nth-child(3)::before{content:'Giá trị ';display:block;font-size:9px;color:var(--muted);font-weight:500}
+  #investmentView #tbody td:nth-child(4){grid-column:1;grid-row:3}
+  #investmentView #tbody td:nth-child(4)::before{content:'Tỷ trọng · ';font-size:10px;color:var(--muted)}
+  #investmentView #tbody td:nth-child(5){grid-column:2;grid-row:3;display:flex;justify-content:flex-end;gap:6px}
+  #investmentView #tbody td:nth-child(5) .btn{min-height:36px;padding:5px 10px}
+  #cashflowView #transactionsBody td:nth-child(1){grid-column:1;grid-row:1;color:var(--muted);font-size:11px}
+  #cashflowView #transactionsBody td:nth-child(2){grid-column:2;grid-row:1;text-align:right}
+  #cashflowView #transactionsBody td:nth-child(3),#cashflowView #transactionsBody td:nth-child(4),#cashflowView #transactionsBody td:nth-child(5){grid-column:1/-1}
+  #cashflowView #transactionsBody td:nth-child(3)::before,#cashflowView #transactionsBody td:nth-child(4)::before,#cashflowView #transactionsBody td:nth-child(5)::before{content:attr(data-label) ': ';color:var(--muted);font-size:10px}
+  #cashflowView #transactionsBody td:nth-child(6){grid-column:1;grid-row:2;font-size:15px;font-weight:700}
+  #cashflowView #transactionsBody td:nth-child(7){grid-column:2;grid-row:2;display:flex;justify-content:flex-end;gap:6px}
+  #cashflowView #transactionsBody td:nth-child(7) .btn{min-height:38px;padding:6px 12px}
+  #cashflowView .table-wrap th,#cashflowView .table-wrap td{box-sizing:border-box}
+  .note,.liability,.advanced-panel{min-width:0;overflow-wrap:anywhere}
+}
