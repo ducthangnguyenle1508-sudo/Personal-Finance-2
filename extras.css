@@ -4,3 +4,235 @@
 #investmentExtras{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}#investmentExtras .advanced-panel.wide{grid-column:1/-1}.target-embedded{margin-top:18px;padding-top:4px}.target-embedded .panel-head{margin:10px 0}.target-embedded .panel-head h3{font-size:14px}@media(max-width:800px){#investmentExtras{grid-template-columns:1fr}#investmentExtras .advanced-panel.wide{grid-column:auto}}
 
 .history-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}.history-type{min-width:0}.history-type h4{margin:8px 0;color:var(--green)}.history-type table{min-width:680px}@media(max-width:850px){.history-pair{grid-template-columns:1fr}}
+
+.wallet-row {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) auto;
+  gap: 8px 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line, #e4ece7);
+}
+
+.wallet-row small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted, #718078);
+}
+
+.wallet-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wallet-negative,
+.wallet-warning {
+  color: #b42318 !important;
+}
+
+.wallet-setting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 14px;
+}
+
+.wallet-setting input,
+.loan-flow-setting input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+}
+
+.loan-badge {
+  background: #eaf4ee;
+  color: #176447;
+  font-weight: 700;
+}
+
+.loan-flow-setting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.loan-panel {
+  margin: 18px 0;
+}
+
+.loan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.loan-repayments {
+  margin-top: 7px;
+  font-size: 12px;
+}
+
+.loan-repayments summary {
+  color: var(--green);
+  cursor: pointer;
+}
+
+.loan-repayments ul {
+  padding-left: 16px;
+}
+
+.loan-repayments li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.loan-overdue {
+  background: #fff0ef !important;
+}
+
+.loan-overdue td:nth-child(5),
+.loan-overdue td:nth-child(6) {
+  color: #b42318 !important;
+  font-weight: 700;
+}
+
+.loan-due-soon {
+  background: #fff8e6 !important;
+}
+
+.loan-due-soon td:nth-child(5) {
+  color: #9a6700 !important;
+  font-weight: 700;
+}
+
+.loan-highlight {
+  outline: 2px solid var(--green);
+}
+
+.loan-migration-dialog {
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.loan-migration-list {
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.loan-migration-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.loan-migration-item label {
+  display: block;
+  margin: 8px 0;
+}
+
+.loan-migration-item input,
+.loan-migration-item select {
+  display: block;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.loan-migration-item[hidden],
+.migration-new[hidden],
+.migration-date[hidden],
+.migration-existing[hidden],
+.migration-principal[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .wallet-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .wallet-actions .btn {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .loan-table thead {
+    display: none;
+  }
+
+  .loan-table,
+  .loan-table tbody,
+  .loan-table tr,
+  .loan-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .loan-table-wrap {
+    overflow: visible;
+  }
+
+  .loan-table tr {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--white);
+  }
+
+  .loan-table td {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .loan-table td::before {
+    flex: 0 0 38%;
+    color: var(--muted);
+    font-weight: 650;
+    content: attr(data-label);
+  }
+
+  .loan-table td:first-child {
+    display: block;
+  }
+
+  .loan-table td:first-child::before {
+    display: none;
+  }
+
+  .loan-table td:last-child {
+    border: 0;
+  }
+
+  .loan-repayments li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .loan-migration-dialog {
+    width: min(100% - 20px, 640px);
+    padding: 16px;
+  }
+}
+
+.dark .advanced-panel,.dark .wallet-row,.dark .metric,.dark .cat-line{border-color:var(--line);color:var(--ink)}.dark .budget-track{background:#2b3a31}.dark .bar-label,.dark .small,.dark .note{color:var(--muted)}.dark .wallet-negative{color:#ff9c91!important}.dark .loan-badge{background:#3c302a;color:#f0c99b}.dark .loan-highlight{outline-color:#75bd91}.dark .type-chip.loan-badge{background:#3e3528;color:#f5d79b}.dark .toast{background:#e4f2e9;color:#142319}.dark .loan-overdue td{background:#3d2826}.dark .loan-due-soon td{background:#3e361f}
+
+/* Đợt 5 fix: toast ẩn không được chặn thao tác; FAB nằm trên toast ẩn */
+.toast:not(.show){pointer-events:none;visibility:hidden}
+.quick-add-fab{z-index:45}
+/* Đợt 5 fix: chống tràn ngang trên mobile (tabs cuộn ngang trong khung, không nới layout) */
+.shell,.panel,.panel-head,.tabs,.table-wrap{min-width:0;max-width:100%}
+.panel-head>*{min-width:0}
+@media(max-width:800px){html,body{overflow-x:hidden}.panel-head{flex-wrap:wrap}.tabs{width:100%}}

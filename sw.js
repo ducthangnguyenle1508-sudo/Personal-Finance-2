@@ -1,5 +1,11 @@
-const CACHE='so-dau-tu-v8';
-const ASSETS=['./','./index.html','./app.js','./app.css','./extras.js','./extras.css','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',event=>{if(event.request.method!=='GET')return;event.respondWith(caches.match(event.request).then(hit=>hit||fetch(event.request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response}).catch(()=>caches.match('./index.html'))))});
+const APP_VERSION='2026-11-25-14';
+const CACHE_PREFIX='so-dau-tu-';
+const CACHE_NAME=CACHE_PREFIX+APP_VERSION;
+const APP_FILES=['./','./index.html','./app.js','./app.css','./extras.js','./extras.css','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
+const SCOPE_URL=new URL(self.registration.scope);
+function isNetworkFirst(request){const url=new URL(request.url);return request.mode==='navigate'||/\.(html?|js|css)$/i.test(url.pathname)}
+async function cachedResponse(request){const cache=await caches.open(CACHE_NAME);let hit=await cache.match(request);if(hit)return hit;const clean=new URL(request.url);clean.search='';return cache.match(clean.href)}
+async function networkResponse(request){const response=await fetch(request,{cache:'no-store'});if(response.ok){const cache=await caches.open(CACHE_NAME);await cache.put(request,response.clone())}return response}
+self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE_NAME);await Promise.all(APP_FILES.map(async path=>{const request=new Request(new URL(path,SCOPE_URL),{cache:'reload'});try{const response=await fetch(request);if(response.ok)await cache.put(request,response)}catch{}}));if(self.registration.active){const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});clients.forEach(client=>client.postMessage({type:'UPDATE_AVAILABLE',version:APP_VERSION}))}await self.skipWaiting()})()));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{const names=await caches.keys();await Promise.all(names.filter(name=>name.startsWith(CACHE_PREFIX)&&name!==CACHE_NAME).map(name=>caches.delete(name)));await self.clients.claim()})()));
+self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET'||new URL(request.url).origin!==self.location.origin)return;event.respondWith((async()=>{if(isNetworkFirst(request)){try{return await networkResponse(request)}catch{const hit=await cachedResponse(request);if(hit)return hit;if(request.mode==='navigate'){const cache=await caches.open(CACHE_NAME),index=await cache.match(new URL('./index.html',SCOPE_URL).href);if(index)return index}return new Response('Không thể tải ứng dụng khi ngoại tuyến.',{status:503,headers:{'Content-Type':'text/plain;charset=utf-8'}})}}const hit=await cachedResponse(request);if(hit)return hit;try{return await networkResponse(request)}catch{return new Response('',{status:503})}})())});
