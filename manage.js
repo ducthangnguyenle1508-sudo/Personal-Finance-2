@@ -105,7 +105,7 @@ function meter(label,ratio,kind){
 const tile=(label,value,note)=>'<div class="hud-tile"><span>'+label+'</span><strong>'+value+'</strong><small>'+note+'</small></div>';
 function renderHud(data){
   const host=$('#paceHud');if(!host)return;
-  const {info,total,limit,spent,rows,range}=data,remaining=limit-spent;
+  const {info,total,limit,spent,rows}=data,remaining=limit-spent;
   const level=limit?total.level:'idle',statusText=limit?LEVELS[level].label:'Chưa có ngân sách';
   const daily=info.left&&limit?ctx.vnd(Math.max(0,remaining)/info.left):'—';
   const forecast=info.state==='current'&&limit?spent/info.elapsed:null;
@@ -121,8 +121,7 @@ function renderHud(data){
       tile(remaining<0?'Vượt ngân sách':'Còn lại',ctx.vnd(Math.abs(remaining)),rows.length+' danh mục có hạn mức')+
       tile('Có thể chi mỗi ngày',daily,info.left?'còn '+info.left+' ngày'+(info.state==='current'?', tính cả hôm nay':''):'tháng đã kết thúc')+
       tile('Dự báo cuối tháng',forecast===null?'—':ctx.vnd(forecast),forecast===null?'chỉ tính cho tháng hiện tại':forecast>limit?'vượt khoảng '+ctx.vnd(forecast-limit):'trong ngân sách')+
-    '</div>'+(counts?'<div class="hud-counts" aria-label="Số danh mục theo trạng thái">'+counts+'</div>':'')+
-    (range.mode==='week'?'<p class="hud-footnote">Ngân sách và nhịp chi tính theo tháng chứa ngày đầu tuần; biểu đồ bên dưới theo tuần đang chọn.</p>':'')+'</div>';
+    '</div>'+(counts?'<div class="hud-counts" aria-label="Số danh mục theo trạng thái">'+counts+'</div>':'')+'</div>';
 }
 
 /* ---------- Tiến độ theo danh mục ---------- */
@@ -237,17 +236,13 @@ async function savingClick(event){
 /* ---------- Khung tab ---------- */
 function render(){
   if(!ctx)return;
-  const data=budgetSnapshot(),range=data.range;
-  $('#manageLabel').textContent=range.label;
-  $('#managePeriodWeek').classList.toggle('primary',range.mode==='week');
-  $('#managePeriodMonth').classList.toggle('primary',range.mode==='month');
+  const data=budgetSnapshot();
+  $('#manageLabel').textContent=data.range.label;
   $('#budgetTitle').textContent='Tiến độ chi tiêu · tháng '+data.month.slice(5)+'/'+data.month.slice(0,4);
   renderHud(data);renderCategories(data);renderSavings();
 }
 function mount(context){
   ctx=context;
-  $('#managePeriodWeek').onclick=()=>ctx.setMode('week');
-  $('#managePeriodMonth').onclick=()=>ctx.setMode('month');
   $('#managePrev').onclick=()=>ctx.shift(-1);
   $('#manageNext').onclick=()=>ctx.shift(1);
   $('#budgetList').onclick=event=>{
