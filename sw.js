@@ -1,4 +1,4 @@
-const APP_VERSION='2026-11-27-1';
+const APP_VERSION='2026-11-27-2';
 const CACHE_PREFIX='so-dau-tu-';
 const CACHE_NAME=CACHE_PREFIX+APP_VERSION;
 const APP_FILES=['./','./index.html','./app.js','./app.css','./extras.js','./extras.css','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
