@@ -1,7 +1,7 @@
-const APP_VERSION='2026-11-27-6';
+const APP_VERSION='2026-11-27-7';
 const CACHE_PREFIX='so-dau-tu-';
 const CACHE_NAME=CACHE_PREFIX+APP_VERSION;
-const APP_FILES=['./','./index.html','./app.js','./app.css','./extras.js','./extras.css','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
+const APP_FILES=['./','./index.html','./app.js','./app.css','./extras.js','./extras.css','./manage.js','./manage.css','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 const SCOPE_URL=new URL(self.registration.scope);
 function isNetworkFirst(request){const url=new URL(request.url);return request.mode==='navigate'||/\.(html?|js|css)$/i.test(url.pathname)}
 async function cachedResponse(request){const cache=await caches.open(CACHE_NAME);let hit=await cache.match(request);if(hit)return hit;const clean=new URL(request.url);clean.search='';return cache.match(clean.href)}
