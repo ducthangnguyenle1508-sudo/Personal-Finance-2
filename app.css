@@ -136,3 +136,19 @@ tbody tr{transition:background .12s}tbody tr:hover{background:#f8faf8}.field inp
   #cashflowView .period-toolbar .period-nav strong{grid-column:auto;min-width:0;text-align:center}
   #cashflowView .period-toolbar #addTransaction{grid-column:auto;width:100%}
 }
+
+/* Sổ giao dịch gom theo ngày (bấm tiêu đề ngày để mở/đóng) */
+#cashflowView #transactionsBody tr.day-tools{display:block;padding:0;border:0;background:none}
+#cashflowView #transactionsBody tr.day-tools td{display:flex;gap:8px;padding:0 0 4px;border:0}
+#cashflowView #transactionsBody tr.day-tools .btn{min-height:34px;padding:5px 12px;font-size:12px}
+#cashflowView #transactionsBody tr.day-head{display:block;cursor:pointer;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--white)}
+#cashflowView #transactionsBody tr.day-head td{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;padding:12px;border:0;font-size:13px;color:var(--ink);grid-column:auto;grid-row:auto;text-align:left}
+#cashflowView #transactionsBody tr.day-head.open{border-color:var(--green)}
+.day-arrow{color:var(--green);width:14px}
+.day-count{color:var(--muted);font-size:12px}
+.day-sum{display:flex;gap:10px;margin-left:auto;font-size:12px;font-variant-numeric:tabular-nums}
+.day-sum em{font-style:normal;font-weight:700}
+.day-sum .in{color:var(--green)}
+.day-sum .out{color:#b42318}
+.dark .day-sum .out{color:#ff9c91}
+@media(min-width:801px){#cashflowView #transactionsBody tr.day-head td,#cashflowView #transactionsBody tr.day-tools td{display:table-cell;padding:10px 12px}.day-sum{float:right}}
