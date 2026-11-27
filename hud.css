@@ -1,0 +1,72 @@
+/* ===== HUD tổng quan: Đầu tư và Thu chi (nền xanh đậm ở cả chế độ sáng và tối) ===== */
+.board{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,320px);gap:30px;align-items:center;margin-bottom:18px;
+  padding:26px;border-radius:20px;color:#ecf8f1;border:1px solid #2b6049;
+  background:linear-gradient(#ffffff08 1px,transparent 1px) 0 0/100% 28px,linear-gradient(90deg,#ffffff08 1px,transparent 1px) 0 0/28px 100%,radial-gradient(ellipse at 82% 28%,#1d6b4a 0,transparent 55%),linear-gradient(145deg,#0e3a2a,#08201a);
+  box-shadow:0 14px 34px #0b2b1f33,inset 0 0 0 1px #ffffff0a}
+.board::before,.board::after{content:"";position:absolute;width:22px;height:22px;border:2px solid #5ee9a0;opacity:.8;pointer-events:none}
+.board::before{top:10px;left:10px;border-right:0;border-bottom:0;border-top-left-radius:8px}
+.board::after{right:10px;bottom:10px;border-left:0;border-top:0;border-bottom-right-radius:8px}
+.board-main,.board-side{min-width:0}
+.board-label{display:block;margin-top:10px;font-size:12px;color:#a9cbbb}
+.board-hero{font:700 clamp(30px,4.6vw,46px)/1.15 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:-.05em;overflow-wrap:anywhere;text-shadow:0 0 22px #5ee9a055}
+.board-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.board-chips:empty{display:none}
+.board-chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;color:#cfe5da;background:#ffffff12;border:1px solid #ffffff26}
+.board-chip.up{color:#7ef0b0;background:#5ee9a01c;border-color:#5ee9a05c}
+.board-chip.down{color:#ffa097;background:#ff7a721c;border-color:#ff7a725c}
+.board .hud-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+.board .hud-tile{align-content:start}
+.board .up{color:#7ef0b0}.board .down{color:#ffa097}
+.board .hud-tile.debt strong{color:#ffa097}
+
+/* Số do app.js ghi: giữ màu sáng trên nền đậm, kể cả khi ẩn số dư */
+.board .board-hero.value{margin:0;color:#fff}
+.board .board-hero.value.income{color:#7ef0b0;font-weight:700}
+.board .board-hero.value.expense{color:#ffa097;font-weight:700}
+.board .board-flow .value{font-size:18px;margin:0;letter-spacing:-.02em;color:#fff}
+.hide-balances .board .value{color:#fff!important}
+.hide-balances .board .value::after{content:none}
+
+/* Vòng cơ cấu tài sản */
+.board-ring{position:relative;width:min(210px,100%);aspect-ratio:1;margin:0 auto}
+.board-ring svg{width:100%;height:100%}
+.board-ring circle{fill:none;stroke-width:13}
+.board-ring .ring-base{stroke:#ffffff14}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-center small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a9cbbb}
+.ring-center strong{font:700 20px ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:-.04em}
+.board-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;list-style:none;padding:0;margin:14px 0 0;font-size:12px}
+.board-legend li{display:flex;align-items:center;gap:7px;min-width:0}
+.board-legend i{flex:0 0 9px;height:9px;border-radius:3px}
+.board-legend span{color:#cfe5da}
+.board-legend b{margin-left:auto;font-variant-numeric:tabular-nums}
+.board-debt{margin-top:14px}
+
+/* Dòng tiền */
+.board-flow{display:grid;gap:12px;margin-top:16px}
+.flow-line>div:first-child{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:2px 10px;margin-bottom:5px}
+.flow-line span.flow-name{font-size:12px;color:#c4dfd1}
+.flow-line .hud-track i.in{background:#5ee9a0;box-shadow:0 0 12px #5ee9a0aa}
+.flow-line .hud-track i.out{background:#ff8a80;box-shadow:0 0 12px #ff8a80aa}
+.flow-line .flow-delta{margin-top:6px}
+.flow-line .flow-delta:empty{display:none}
+.saving-gauge{--p:0;--c:#5ee9a0;position:relative;width:min(170px,100%);aspect-ratio:1;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--c) calc(var(--p)*1%),#ffffff17 0);filter:drop-shadow(0 0 10px #5ee9a033)}
+.saving-gauge.negative{--c:#ff8a80;background:#ff8a8055}
+.saving-gauge::before{content:"";position:absolute;inset:13px;border-radius:50%;background:#0d3225}
+.saving-gauge>div{position:relative;display:grid;text-align:center;padding:0 16px}
+.saving-gauge .value{margin:0;font:700 28px ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:-.05em;color:#fff}
+.saving-gauge small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a9cbbb}
+.board-status{text-align:center}
+.board-side h3{margin:16px 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9ed9bb}
+.board-top{display:grid;gap:9px;list-style:none;padding:0;margin:0;font-size:12px}
+.board-top li>div:first-child{display:flex;justify-content:space-between;gap:10px;margin-bottom:4px}
+.board-top .hud-track{height:6px}
+.board-top .hud-track i{background:#b7d3c5}
+.board-top small,.board-empty{font-size:11px;color:#a9cbbb}
+
+@media(max-width:900px){.board{grid-template-columns:minmax(0,1fr);gap:20px}.board-legend{max-width:420px;margin-left:auto;margin-right:auto}}
+@media(max-width:560px){
+  .board{padding:20px 14px;border-radius:16px;gap:18px;margin-bottom:14px}
+  .board .hud-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #flowTiles .hud-tile:last-child{grid-column:1/-1}
+}
